@@ -158,6 +158,27 @@ scoreClassifier(nsc_labels_ORL_pca,test_labels_ORL)
 
 %% Perceptron with Backpropagation
 
+W_MNIST = trainPerceptronBP(train_images_MNIST,...
+                      train_labels_MNIST,...
+                      0.001,...
+                      'MNIST');
+                  
+                  
+perceptron_labels_MNIST = perceptronBP(W_MNIST,test_images_MNIST,'MNIST');
+                  
+scoreClassifier(perceptron_labels_MNIST,test_labels_MNIST)
+                 
+                  
+                  
+                  
+                  %%
+W_ORL = trainPerceptronBP(train_images_ORL,...
+                      train_labels_ORL,...
+                      0.001,...
+                      'ORL'); 
+perceptron_labels_ORL = perceptronBP(W_ORL,test_images_ORL,'ORL');
 
+scoreClassifier(perceptron_labels_ORL,test_labels_ORL)
+         
 
 
