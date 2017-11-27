@@ -1,4 +1,4 @@
-function [ labels ] = perceptron_mse(W )
+function [ labels ] = perceptronMSE(W )
 %PERCEPTRON_MSE Minimum Square Error Perceptron Classifier
 
 

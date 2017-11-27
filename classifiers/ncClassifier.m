@@ -1,9 +1,8 @@
-function [ lables,m ] = nc_classify(data_train, data_test, labels_train )
+function [ lables,m ] = ncClassifier(data_train, data_test, labels_train, data_type)
 %NC_CLASSIFY Nearest Centroid Classifier
 
-s = size(data_train);
 
-if s(1) == 784 
+if strcmp(data_type,'MNIST')  
     % MNIST Data
     % 0-9 Numbers resulting in 10 classes
     
@@ -23,7 +22,7 @@ if s(1) == 784
         [~,lables(i)] = min(d);  
     end
   
-elseif s(1) == 1200
+elseif strcmp(data_type,'ORL') 
     % ORL Data
     % 40 people -> 40 classes
     
