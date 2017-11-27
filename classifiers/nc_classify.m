@@ -20,7 +20,7 @@ if s(1) == 784
         for k =1:10
             d(k) = norm(data_test(:,i) -m(:,k))^2;
         end
-        [~,lables(i)] = max(d);  
+        [~,lables(i)] = min(d);  
     end
   
 elseif s(1) == 1200
@@ -39,7 +39,7 @@ elseif s(1) == 1200
         for k =1:40
             d(k) = norm(data_test(:,i) -m(:,k))^2;
         end
-        [~,lables(i)] = max(d);  
+        [~,lables(i)] = min(d);  
     end
    
     
