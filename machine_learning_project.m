@@ -50,7 +50,7 @@ test_labels_ORL = labels_ORL(perm(train_number+1:end));
 
 
 %% Dimensionality Reduction using PCA
-target_dimension = 2;
+target_dimension = 10;
 
 train_images_MNIST_pca = principalComponents(train_images_MNIST,...
                                              target_dimension);
@@ -81,7 +81,7 @@ nc_labels_ORL = ncClassifier(train_images_ORL,...
 scoreClassifier(nc_labels_MNIST,test_labels_MNIST)
 scoreClassifier(nc_labels_ORL,test_labels_ORL)
 
-% Classification on PCA-reduced Image Data
+%% Classification on PCA-reduced Image Data
 nc_labels_MNIST_pca = ncClassifier(train_images_MNIST_pca,...
                                                   test_images_MNIST_pca,...
                                                   train_labels_MNIST,...
@@ -156,29 +156,77 @@ scoreClassifier(nsc_labels_ORL_pca,test_labels_ORL)
 % scoreClassifier(nn_labels_ORL_pca,test_labels_ORL)
 
 
-%% Perceptron with Backpropagation
+%% Perceptron with Backpropagation on original Data
 
 W_MNIST = trainPerceptronBP(train_images_MNIST,...
                       train_labels_MNIST,...
-                      0.001,...
+                      0.1,...
                       'MNIST');
                   
                   
-perceptron_labels_MNIST = perceptronBP(W_MNIST,test_images_MNIST,'MNIST');
+pBP_labels_MNIST = perceptronBP(W_MNIST,test_images_MNIST,'MNIST');
                   
-scoreClassifier(perceptron_labels_MNIST,test_labels_MNIST)
+scoreClassifier(pBP_labels_MNIST,test_labels_MNIST)
                  
-                  
-                  
-                  
-                  %%
+%%      
 W_ORL = trainPerceptronBP(train_images_ORL,...
                       train_labels_ORL,...
-                      0.001,...
+                      0.1,...
                       'ORL'); 
-perceptron_labels_ORL = perceptronBP(W_ORL,test_images_ORL,'ORL');
+pBP_labels_ORL = perceptronBP(W_ORL,test_images_ORL,'ORL');
 
-scoreClassifier(perceptron_labels_ORL,test_labels_ORL)
+scoreClassifier(pBP_labels_ORL,test_labels_ORL)
+
+%% Perceptron with Backpropagation on PCA-reduced Data
+
+W_MNIST_pca = trainPerceptronBP(train_images_MNIST_pca,...
+                      train_labels_MNIST,...
+                      0.1,...
+                      'MNIST');
+                  
+                  
+pBP_labels_MNIST_pca = perceptronBP(W_MNIST_pca,test_images_MNIST_pca,'MNIST');
+                  
+scoreClassifier(pBP_labels_MNIST_pca,test_labels_MNIST)
+                 
+%%      
+W_ORL_pca = trainPerceptronBP(train_images_ORL_pca,...
+                      train_labels_ORL,...
+                      0.1,...
+                      'ORL'); 
+pBP_labels_ORL_pca = perceptronBP(W_ORL_pca,test_images_ORL_pca,'ORL');
+
+scoreClassifier(pBP_labels_ORL_pca,test_labels_ORL)
+
+%% Perceptron Minimum Square Error
+
+% Original Data
+W_MNIST_MSE = trainPerceptronMSE(train_images_MNIST,...
+                              train_labels_MNIST,'MNIST'); 
+pMSE_labels_MNIST = perceptronMSE(W_MNIST_MSE,test_images_MNIST,'MNIST');
+
+scoreClassifier(pMSE_labels_MNIST,test_labels_MNIST)
+
+W_ORL_MSE = trainPerceptronMSE(train_images_ORL,...
+                              train_labels_ORL,'ORL'); 
+pMSE_labels_ORL = perceptronMSE(W_ORL_MSE,test_images_ORL,'ORL');
+
+scoreClassifier(pMSE_labels_ORL,test_labels_ORL)
+
+%% PCA-reduced Data
+W_MNIST_MSE_pca = trainPerceptronMSE(train_images_MNIST_pca,...
+                              train_labels_MNIST,'MNIST'); 
+pMSE_labels_MNIST_pca = perceptronMSE(W_MNIST_MSE_pca,...
+                                      test_images_MNIST_pca,'MNIST');
+
+scoreClassifier(pMSE_labels_MNIST_pca,test_labels_MNIST)
+
+W_ORL_MSE_pca = trainPerceptronMSE(train_images_ORL_pca,...
+                              train_labels_ORL,'ORL'); 
+pMSE_labels_ORL_pca = perceptronMSE(W_ORL_MSE_pca,test_images_ORL_pca,'ORL');
+
+scoreClassifier(pMSE_labels_ORL_pca,test_labels_ORL)
+
          
 
 

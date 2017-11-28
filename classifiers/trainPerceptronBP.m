@@ -51,8 +51,8 @@ while ~isempty(X) & counter < 20
         delta_W = learning_rate* sum((ones(dim+1,1)*l(i,X)).*data(:,X),2);
         W(:,i) = W(:,i) + delta_W;
     end
-    length(X)
-    counter = counter + 1
+    length(X);
+    counter = counter + 1;
 end
 end
 
