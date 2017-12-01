@@ -29,6 +29,7 @@ for i=1:number_of_samples
     end
     [~,labels(i)] = min(d);
     labels(i) = ceil(labels(i)/K);
+    labels(i) = labels(i) - label_correction;
 end
 
 

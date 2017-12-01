@@ -1,7 +1,5 @@
-function [ labels ] = nnClassifier(data_train,data_test, labels_train )
+function [ labels ] = nnClassifier(data_train,data_test, labels_train)
 %NN_CLASSIFY Nearest Neighborhood Classifier
-
-
 
 % Classify the test images
 [~,number_of_samples] = size(data_test);
