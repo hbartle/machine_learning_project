@@ -13,17 +13,20 @@ close all
 clc
 
 %% Set Path Variable
+disp('Setting path...')
 addpath('misc/')
 addpath('classifiers/')
 addpath(genpath('data/'))
-
+disp('Done!')
 %% Load the MNIST Image Data
+disp('Loading MNIST data Set...')
 train_images_MNIST = loadMNISTImages('train-images.idx3-ubyte');
 test_images_MNIST = loadMNISTImages('t10k-images.idx3-ubyte');
 train_labels_MNIST = loadMNISTLabels('train-labels.idx1-ubyte');
 test_labels_MNIST = loadMNISTLabels('t10k-labels.idx1-ubyte');
-
+disp('Done!')
 %% Load the ORL Image Data
+disp('Loading ORL data set...')
 load('orl_data.mat')
 load('orl_lbls.mat')
 images_ORL = data;
@@ -31,7 +34,7 @@ clear data
 labels_ORL = lbls;
 clear lbls
 
-%% Split up ORL Data
+% Split up ORL Data
 [~,number_of_images]= size(images_ORL);
 
 train_percentage = 0.7;
@@ -48,8 +51,9 @@ test_images_ORL = images_ORL(:,perm(train_number+1:end));
 train_labels_ORL = labels_ORL(perm(1:train_number));
 test_labels_ORL = labels_ORL(perm(train_number+1:end));
 
-
+disp('Done!')
 %% Dimensionality Reduction using PCA
+disp('Applying PCA...')
 target_dimension = 1;
 
 train_images_MNIST_pca = principalComponents(train_images_MNIST,...
@@ -60,9 +64,10 @@ train_images_ORL_pca = principalComponents(train_images_ORL,...
                                            target_dimension);
 test_images_ORL_pca = principalComponents(test_images_ORL,...
                                           target_dimension);
+disp('Done!')
 
-
-%% Nearest Class Classifier Evaluation
+%% Nearest Centroid Classifier Evaluation
+disp('Classify using Nearest Centroid...')
 tic;
 % Classification on Raw Image Data
 nc_labels_MNIST = ncClassifier(train_images_MNIST(:,:),...
@@ -91,8 +96,9 @@ nc_labels_ORL_pca = ncClassifier(train_images_ORL_pca,...
                                               train_labels_ORL,...
                                               'ORL');
 t_nc_ORL_pca = toc;
+disp('Done!')
 %% Nearest Subclass Classifier
-
+disp('Classify using Nearest Subclass...')
 % Classification on Raw Image Data
 tic;
 nsc_labels_MNIST = nscClassifier(train_images_MNIST,...
@@ -124,9 +130,9 @@ nsc_labels_ORL_pca = nscClassifier(train_images_ORL_pca,...
                                2,...
                                'ORL');
 t_nsc_ORL_pca = toc;
-
+disp('Done!')
 %% Nearest Neighborhood Classifier
-
+disp('Classify using Nearest Neighbor...')
 % Classification on Raw Image Data
 training_subset = 700;
 testing_subset = 300;
@@ -152,7 +158,9 @@ nn_labels_ORL_pca = nnClassifier(train_images_ORL_pca,...
                                test_images_ORL_pca,...
                                train_labels_ORL);
 t_nn_ORL_pca = toc;
+disp('Done!')
 %% Perceptron with Backpropagation on original Data
+disp('Classify using Perceptron trained with Backpropagation...')
 tic;
 W_MNIST = trainPerceptronBP(train_images_MNIST,...
                       train_labels_MNIST,...
@@ -183,9 +191,9 @@ W_ORL_pca = trainPerceptronBP(train_images_ORL_pca,...
                       'ORL'); 
 pBP_labels_ORL_pca = perceptronBP(W_ORL_pca,test_images_ORL_pca,'ORL');
 t_pbp_ORL_pca = toc;
-
+disp('Done!')
 %% Perceptron Minimum Square Error
-
+disp('Classify using MSE Perceptron...')
 % Original Data
 tic;
 W_MNIST_MSE = trainPerceptronMSE(train_images_MNIST,...
@@ -210,9 +218,10 @@ W_ORL_MSE_pca = trainPerceptronMSE(train_images_ORL_pca,...
                               train_labels_ORL,'ORL'); 
 pMSE_labels_ORL_pca = perceptronMSE(W_ORL_MSE_pca,test_images_ORL_pca,'ORL');
 t_pmse_ORL_pca = toc;     
-
+disp('Done!')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Scoring
+disp('Scoring Classifiers...')
 
 % Nearest Centroid
 sc_nc_MNIST = scoreClassifier(nc_labels_MNIST,test_labels_MNIST(:));
@@ -243,3 +252,4 @@ sc_pmse_MNIST = scoreClassifier(pMSE_labels_MNIST,test_labels_MNIST);
 sc_pmse_ORL   = scoreClassifier(pMSE_labels_ORL,test_labels_ORL);
 sc_pmse_MNIST_pca = scoreClassifier(pMSE_labels_MNIST_pca,test_labels_MNIST);
 sc_pmse_ORL_pca   = scoreClassifier(pMSE_labels_ORL_pca,test_labels_ORL);
+disp('Done!')
