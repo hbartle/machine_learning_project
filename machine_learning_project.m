@@ -73,6 +73,7 @@ apply_Perceptron_MSE
 %% Scoring
 score
 %% Plots
+close all
 FontSize= 16;
 fig_MNIST = figure('units','normalized','outerposition',[0 0 1 1]);
 y = [sc_nc_MNIST;...
@@ -85,7 +86,7 @@ y = [sc_nc_MNIST;...
 c = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
 bar(y)
 barvalues;
-ylim([0 100]);
+ylim([0 120]);
 set(gca,'xticklabel',c)
 set(gca,'FontSize',FontSize);
 ylabel('Success Rate [%]','FontSize',FontSize)
@@ -93,7 +94,7 @@ grid on
 
 
 fig_ORL = figure('units','normalized','outerposition',[0 0 1 1]);
-y = [sc_nc_MNIST;...
+y = [sc_nc_ORL;...
      sc_nsc_ORL(1);...
      sc_nsc_ORL(2);...
      sc_nsc_ORL(3);...
@@ -103,12 +104,43 @@ y = [sc_nc_MNIST;...
 c = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
 bar(y)
 barvalues;
-ylim([0 100]);
+ylim([0 120]);
 set(gca,'xticklabel',c)
 set(gca,'FontSize',FontSize);
 ylabel('Success Rate [%]','FontSize',FontSize)
 grid on
 
+fig_MNIST_time = figure('units','normalized','outerposition',[0 0 1 1]);
+y = [t_nc_MNIST;...
+     t_nsc_MNIST{1};...
+     t_nsc_MNIST{2};...
+     t_nsc_MNIST{3};...
+     t_nn_MNIST;...
+     t_pbp_MNIST;...
+     t_pmse_MNIST]*1000;
+c = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
+bar(y)
+barvalues;
+set(gca,'xticklabel',c)
+set(gca,'FontSize',FontSize);
+ylabel('Execution Time [ms]','FontSize',FontSize)
+grid on
+
+fig_ORL_time = figure('units','normalized','outerposition',[0 0 1 1]);
+y = [t_nc_ORL;...
+     t_nsc_ORL{1};...
+     t_nsc_ORL{2};...
+     t_nsc_ORL{3};...
+     t_nn_ORL;...
+     t_pbp_ORL;...
+     t_pmse_ORL]*1000;
+c = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
+bar(y)
+barvalues;
+set(gca,'xticklabel',c)
+set(gca,'FontSize',FontSize);
+ylabel('Execution Time [ms]','FontSize',FontSize)
+grid on
 
 
 
