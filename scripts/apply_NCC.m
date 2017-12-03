@@ -22,7 +22,7 @@ nc_labels_ORL = ncClassifier(train_images_ORL,...
 t_nc_ORL = toc;
 disp('Done!')
 
-
+if do_PCA == true
 % Classification on PCA-reduced Image Data
 disp('PCA reduced data...')
 nc_labels_MNIST_pca = cell(1,length(target_dimension));
@@ -47,5 +47,5 @@ for i= 1:length(target_dimension)
     t_nc_ORL_pca(i) = toc;
 
 end
-
 disp('Done!')
+end

@@ -38,8 +38,8 @@ clear lbls
 % Split up ORL Data
 [~,number_of_images]= size(images_ORL);
 
-train_percentage = 0.7;
-train_number = 0.7*number_of_images;
+train_percentage = 0.8;
+train_number = 0.8*number_of_images;
 test_number = number_of_images - train_number;
 
 % Random Permutation
@@ -55,7 +55,10 @@ test_labels_ORL = labels_ORL(perm(train_number+1:end));
 disp('Done!')
 
 %% Dimensionality Reduction using PCA
-apply_PCA
+do_PCA = false;
+if do_PCA == true
+    apply_PCA
+end
 %% Nearest Centroid Classifier Evaluation
 apply_NCC
 %% Nearest Subclass Classifier
@@ -70,4 +73,45 @@ apply_Perceptron_MSE
 %% Scoring
 score
 %% Plots
+FontSize= 16;
+fig_MNIST = figure('units','normalized','outerposition',[0 0 1 1]);
+y = [sc_nc_MNIST;...
+     sc_nsc_MNIST(1);...
+     sc_nsc_MNIST(2);...
+     sc_nsc_MNIST(3);...
+     sc_nn_MNIST;...
+     sc_pbp_MNIST;...
+     sc_pmse_MNIST]*100;
+c = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
+bar(y)
+barvalues;
+ylim([0 100]);
+set(gca,'xticklabel',c)
+set(gca,'FontSize',FontSize);
+ylabel('Success Rate [%]','FontSize',FontSize)
+grid on
+
+
+fig_ORL = figure('units','normalized','outerposition',[0 0 1 1]);
+y = [sc_nc_MNIST;...
+     sc_nsc_ORL(1);...
+     sc_nsc_ORL(2);...
+     sc_nsc_ORL(3);...
+     sc_nn_ORL;...
+     sc_pbp_ORL;...
+     sc_pmse_ORL]*100;
+c = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
+bar(y)
+barvalues;
+ylim([0 100]);
+set(gca,'xticklabel',c)
+set(gca,'FontSize',FontSize);
+ylabel('Success Rate [%]','FontSize',FontSize)
+grid on
+
+
+
+
+
+
 

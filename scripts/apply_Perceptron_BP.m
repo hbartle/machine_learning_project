@@ -22,6 +22,7 @@ W_ORL = trainPerceptronBP(train_images_ORL,...
 pBP_labels_ORL = perceptronBP(W_ORL,test_images_ORL,'ORL');
 t_pbp_ORL = toc;
 
+if do_PCA == true
 % Classification on PCA-reduced Image Data
 disp('PCA reduced data...')
 pBP_labels_MNIST_pca = cell(1,length(target_dimension));
@@ -47,5 +48,6 @@ for i= 1:length(target_dimension)
                           'ORL'); 
     pBP_labels_ORL_pca{i} = perceptronBP(W_ORL_pca,test_images_ORL_pca{i},'ORL');
     t_pbp_ORL_pca(i) = toc;
+end
 end
 disp('Done!')

@@ -2,7 +2,7 @@
 % Script to apply PCA on data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('Applying PCA...')
-target_dimension = [1:10,15:5:40];
+target_dimension = [1:10,15:5:100];
 
 train_images_MNIST_pca = cell(1,length(target_dimension));
 test_images_MNIST_pca = cell(1,length(target_dimension));

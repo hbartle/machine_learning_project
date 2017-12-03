@@ -16,6 +16,7 @@ W_ORL_MSE = trainPerceptronMSE(train_images_ORL,...
 pMSE_labels_ORL = perceptronMSE(W_ORL_MSE,test_images_ORL,'ORL');
 t_pmse_ORL = toc;
 
+if do_PCA == true
 % Classification on PCA-reduced Image Data
 disp('PCA reduced data...')
 pMSE_labels_MNIST_pca = cell(1,length(target_dimension));
@@ -37,5 +38,6 @@ for i= 1:length(target_dimension)
                                   train_labels_ORL,'ORL'); 
     pMSE_labels_ORL_pca{i} = perceptronMSE(W_ORL_MSE_pca,test_images_ORL_pca{i},'ORL');
     t_pmse_ORL_pca(i) = toc;     
+end
 end
 disp('Done!')

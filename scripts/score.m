@@ -19,6 +19,7 @@ sc_pbp_ORL   = scoreClassifier(pBP_labels_ORL,test_labels_ORL);
 sc_pmse_MNIST = scoreClassifier(pMSE_labels_MNIST,test_labels_MNIST);
 sc_pmse_ORL   = scoreClassifier(pMSE_labels_ORL,test_labels_ORL);
 
+if do_PCA == true
 % PCA-reduced Data
 for i = 1:length(target_dimension)
     % Nearest Centroid
@@ -38,6 +39,7 @@ for i = 1:length(target_dimension)
     % MSE Perceptron
     sc_pmse_MNIST_pca(i) = scoreClassifier(pMSE_labels_MNIST_pca{i},test_labels_MNIST);
     sc_pmse_ORL_pca(i)   = scoreClassifier(pMSE_labels_ORL_pca{i},test_labels_ORL);
+end
 end
 
 disp('Done!')

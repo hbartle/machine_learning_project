@@ -11,12 +11,13 @@ nsc_labels_ORL = cell(length(subclasses),1);
 t_nsc_MNIST = cell(length(subclasses),1);
 t_nsc_ORL = cell(length(subclasses),1);
 
+if do_PCA == true
 nsc_labels_MNIST_pca = cell(length(subclasses),length(target_dimension));
 nsc_labels_ORL_pca = cell(length(subclasses),length(target_dimension));
 
 t_nsc_MNIST_pca = cell(length(subclasses),length(target_dimension));
 t_nsc_ORL_pca = cell(length(subclasses),length(target_dimension));
-
+end
 
 for k=1:length(subclasses)
 disp([num2str(subclasses(k)),' Subclasses'])
@@ -37,6 +38,7 @@ nsc_labels_ORL{k} = nscClassifier(train_images_ORL,...
                                'ORL');
 t_nsc_ORL{k} = toc;
 
+if do_PCA == true
 % Classification on PCA-reduced Image Data
 disp('PCA reduced data...')
 
@@ -58,6 +60,7 @@ for i= 1:length(target_dimension)
                                      'ORL');
     t_nsc_ORL_pca{k,i} = toc;
 
+end
 end
 end
 disp('Done!')

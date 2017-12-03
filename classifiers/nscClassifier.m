@@ -13,23 +13,25 @@ elseif strcmp(data_type,'ORL')
     label_correction = 0;  
 end
 
-    
+subclass_mean = cell(1,number_of_classes);
 % Calculate Subclasses 
 for i=1:number_of_classes
     idx = find(labels_train == i-label_correction);
-    [~,subclass_mean(:,K*(i-1)+1:K*(i))] = kMeans(data_train(:,idx),K);
+    [~,subclass_mean{i}] = kmeans(data_train(:,idx)',K);
 end
 
 
 % Classify the test images
 [~,number_of_samples] = size(data_test);
 for i=1:number_of_samples
-    for k =1:10*K
-        d(k) = norm(data_test(:,i) - subclass_mean(:,k))^2;
+    for k =1:number_of_classes
+        for j = 1:K
+            d_sub(j) = norm(data_test(:,i) - subclass_mean{k}(j,:)')^2;
+        end
+        d(k) = min(d_sub);
     end
-    [~,labels(i)] = min(d);
-    labels(i) = ceil(labels(i)/K);
-    labels(i) = labels(i) - label_correction;
+    [~,c] = min(d);
+    labels(i) = c - label_correction;
 end
 
 
