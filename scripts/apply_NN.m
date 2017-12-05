@@ -6,8 +6,7 @@ disp('Classify using Nearest Neighbor...')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Original Data...')
 % Classification on Raw Image Data
-training_subset = 700;
-testing_subset = 300;
+
 tic;
 nn_labels_MNIST = nnClassifier(train_images_MNIST(:,1:training_subset),...
                                test_images_MNIST(:,1:testing_subset),...

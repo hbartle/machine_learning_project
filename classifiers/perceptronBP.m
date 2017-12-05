@@ -19,7 +19,7 @@ end
 
 [~,number_of_samples] = size(data_test);
 
-labels = nan*ones(1,number_of_samples);
+labels = zeros(1,number_of_samples);
 
 % Augment the data
 data = [data_test; ones(1,number_of_samples)];

@@ -5,7 +5,6 @@ disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Classify using Nearest Subclass...')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Original Data...')
-subclasses = [2,3,5];
 nsc_labels_MNIST = cell(length(subclasses),1);
 nsc_labels_ORL = cell(length(subclasses),1);
 t_nsc_MNIST = cell(length(subclasses),1);
@@ -42,7 +41,7 @@ if do_PCA == true
 % Classification on PCA-reduced Image Data
 disp('PCA reduced data...')
 
-
+try
 for i= 1:length(target_dimension)
     disp(['Target Dimension: ', num2str(target_dimension(i))])
     tic;
@@ -60,6 +59,9 @@ for i= 1:length(target_dimension)
                                      'ORL');
     t_nsc_ORL_pca{k,i} = toc;
 
+end
+catch
+   disp('Classification not possible')
 end
 end
 end

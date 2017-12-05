@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Script to apply BP-trained Perceptron on data
+% Script to apply MSE-trained Perceptron on data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-disp('Classify using BP-Perceptron ...')
+disp('Classify using MSE-Perceptron ...')
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 disp('Original Data...')
 tic;

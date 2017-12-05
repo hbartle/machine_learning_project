@@ -38,32 +38,46 @@ clear lbls
 % Split up ORL Data
 [~,number_of_images]= size(images_ORL);
 
-train_percentage = 0.8;
-train_number = 0.8*number_of_images;
+train_percentage = 0.7;
+train_number = 0.7*number_of_images;
 test_number = number_of_images - train_number;
 
 % Random Permutation
 perm = randperm(number_of_images);
 
-% Shuffle Images
-train_images_ORL = images_ORL(:,perm(1:train_number));
-test_images_ORL = images_ORL(:,perm(train_number+1:end));
-% Shuffle the corresponding labels
-train_labels_ORL = labels_ORL(perm(1:train_number));
-test_labels_ORL = labels_ORL(perm(train_number+1:end));
+% % Shuffle Images
+% train_images_ORL = images_ORL(:,perm(1:train_number));
+% test_images_ORL = images_ORL(:,perm(train_number+1:end));
+% % Shuffle the corresponding labels
+% train_labels_ORL = labels_ORL(perm(1:train_number));
+% test_labels_ORL = labels_ORL(perm(train_number+1:end));
 
+train_images_ORL = [];
+test_images_ORL =[];
+train_labels_ORL = [];
+test_labels_ORL = [];
+for i=1:40
+    train_images_ORL = [train_images_ORL images_ORL(:,find(labels_ORL==i,7))];
+    test_images_ORL = [test_images_ORL images_ORL(:,find(labels_ORL==i,3,'last'))];
+    train_labels_ORL = [train_labels_ORL labels_ORL(find(labels_ORL==i,7))];
+    test_labels_ORL = [test_labels_ORL labels_ORL(find(labels_ORL==i,3))];
+end
 disp('Done!')
 
 %% Dimensionality Reduction using PCA
-do_PCA = false;
+do_PCA = true;
+target_dimension = 1:10;
 if do_PCA == true
     apply_PCA
 end
 %% Nearest Centroid Classifier Evaluation
 apply_NCC
 %% Nearest Subclass Classifier
+subclasses = [2,3,5];
 apply_NSC
 %% Nearest Neighborhood Classifier
+training_subset = 1000;
+testing_subset = 500;
 apply_NN
 %% Perceptron with Backpropagation on original Data
 apply_Perceptron_BP

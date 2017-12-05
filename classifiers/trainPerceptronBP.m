@@ -19,10 +19,10 @@ end
 [dim,number_of_samples] = size(data_train);
 
 % Augment the data
-data = [data_train; ones(1,number_of_samples)];
+data = [ data_train; ones(1,number_of_samples)];
 
 % Initialize weights
-W = 0.1*[ones(dim,number_of_classes); zeros(1,number_of_classes)];
+W = 0.1*[ones(dim,number_of_classes);zeros(1,number_of_classes)];
 
 % Get the Binary Labels
 l = -1 * ones(number_of_classes,number_of_samples);
@@ -32,12 +32,12 @@ end
 
 % Set of all misclassified samples
 X = 0;
-% Perceptrion Criterion Function
+% Perceptron Criterion Function
 f = zeros(number_of_classes,number_of_samples);
 
 % Counter to stop iteration when not finding a perfect solution
 counter = 0;
-while ~isempty(X) & counter < 20
+while ~isempty(X) & counter < 200
     % Calculate the Perceptron Criterion Function
     for i=1:number_of_samples
         f(:,i) =  l(:,i).*(W'*data(:,i));
@@ -51,8 +51,10 @@ while ~isempty(X) & counter < 20
         delta_W = learning_rate* sum((ones(dim+1,1)*l(i,X)).*data(:,X),2);
         W(:,i) = W(:,i) + delta_W;
     end
-    length(X);
+
     counter = counter + 1;
 end
+length(X)
+counter
 end
 
