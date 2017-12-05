@@ -18,6 +18,7 @@ addpath('functions/')
 addpath('scripts/')
 addpath('classifiers/')
 addpath(genpath('data/'))
+addpath('plots/')
 disp('Done!')
 %% Load the MNIST Image Data
 disp('Loading MNIST data Set...')
@@ -59,14 +60,16 @@ test_labels_ORL = [];
 for i=1:40
     train_images_ORL = [train_images_ORL images_ORL(:,find(labels_ORL==i,7))];
     test_images_ORL = [test_images_ORL images_ORL(:,find(labels_ORL==i,3,'last'))];
-    train_labels_ORL = [train_labels_ORL labels_ORL(find(labels_ORL==i,7))];
-    test_labels_ORL = [test_labels_ORL labels_ORL(find(labels_ORL==i,3))];
+    train_labels_ORL = [train_labels_ORL labels_ORL(find(labels_ORL==i,7))'];
+    test_labels_ORL = [test_labels_ORL labels_ORL(find(labels_ORL==i,3,'last'))'];
 end
+train_labels_ORL = train_labels_ORL';
+test_labels_ORL = test_labels_ORL';
 disp('Done!')
 
 %% Dimensionality Reduction using PCA
 do_PCA = true;
-target_dimension = 1:10;
+target_dimension = 1:50;
 if do_PCA == true
     apply_PCA
 end
@@ -156,8 +159,46 @@ set(gca,'FontSize',FontSize);
 ylabel('Execution Time [ms]','FontSize',FontSize)
 grid on
 
+if do_PCA == true
+fig_pca_MNIST = figure('units','normalized','outerposition',[0 0 1 1]);
+plot(target_dimension,sc_nc_MNIST_pca*100,...
+     target_dimension,sc_nsc_MNIST_pca(:,1)*100,...
+     target_dimension,sc_nsc_MNIST_pca(:,2)*100,...
+     target_dimension,sc_nsc_MNIST_pca(:,3)*100,...
+     target_dimension,sc_nn_MNIST_pca*100,...
+     target_dimension,sc_pbp_MNIST_pca*100,...
+     target_dimension,sc_pmse_MNIST_pca*100);
+legend('NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE','Location','SE');
+xlabel('Dimensions')
+set(gca,'FontSize',FontSize);
+ylabel('Execution Time [ms]','FontSize',FontSize)
+grid on
+
+
+fig_pca_ORL = figure('units','normalized','outerposition',[0 0 1 1]);
+plot(target_dimension,sc_nc_ORL_pca*100,...
+     target_dimension,sc_nsc_ORL_pca(:,1)*100,...
+     target_dimension,sc_nsc_ORL_pca(:,2)*100,...
+     target_dimension,sc_nsc_ORL_pca(:,3)*100,...
+     target_dimension,sc_nn_ORL_pca*100,...
+     target_dimension,sc_pbp_ORL_pca*100,...
+     target_dimension,sc_pmse_ORL_pca*100);
+legend('NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE','Location','SE');
+xlabel('Dimensions')
+set(gca,'FontSize',FontSize);
+ylabel('Execution Time [ms]','FontSize',FontSize)
+grid on
+
+end
 
 
 
 
+%% Save Figures
+print(fig_MNIST, 'plots/mnist_success','-depsc');
+print(fig_MNIST_time, 'plots/mnist_time','-depsc');
+print(fig_ORL, 'plots/orl_success','-depsc');
+print(fig_ORL_time, 'plots/orl_time','-depsc');
+print(fig_pca_MNIST, 'plots/mnist_pca','-depsc');
+print(fig_pca_ORL, 'plots/orl_pca','-depsc');
 

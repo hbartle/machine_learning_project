@@ -43,9 +43,12 @@ if do_PCA == true
 % PCA-reduced Data
 for i = 1:length(target_dimension)
     % Nearest Centroid
+    try
     sc_nc_MNIST_pca(i) = scoreClassifier(nc_labels_MNIST_pca{i},test_labels_MNIST);
     sc_nc_ORL_pca(i)   = scoreClassifier(nc_labels_ORL_pca{i},test_labels_ORL);
-    
+    catch
+        disp('Labels not available')
+    end
     try
     % Nearest Subclass
     for k = 1:length(subclasses)
