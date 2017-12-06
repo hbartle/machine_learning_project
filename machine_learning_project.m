@@ -232,6 +232,25 @@ ylabel('Execution Time [ms]','FontSize',FontSize)
 xlabel('Success Rate [%]','Fontsize',FontSize)
 grid on
 
+fig_performance_pca = figure('units','normalized','outerposition',[0 0 1 1]);
+x_MNIST_pca = [sc_nc_MNIST_pca(20),sc_nsc_MNIST_pca(20,:), sc_nn_MNIST_pca(20), sc_pbp_MNIST_pca(20),sc_pmse_MNIST_pca(20)]'*100;
+y_MNIST_pca = [t_nc_MNIST_pca(20),t_nsc_MNIST_pca{1,20},t_nsc_MNIST_pca{2,20},t_nsc_MNIST_pca{3,20},t_nn_MNIST_pca(20),t_pbp_MNIST_pca(20),t_pmse_MNIST_pca(20)]';
+x_ORL_pca = [sc_nc_ORL_pca(20),sc_nsc_ORL_pca(20,:), sc_nn_ORL_pca(20), sc_pbp_ORL_pca(20),sc_pmse_ORL_pca(20)]'*100;
+y_ORL_pca = [t_nc_ORL_pca(20),t_nsc_ORL_pca{1,20},t_nsc_ORL_pca{2,20},t_nsc_ORL_pca{3,20},t_nn_ORL_pca(20),t_pbp_ORL_pca(20),t_pmse_ORL_pca(20)]';
+h=semilogy(x_MNIST_pca,y_MNIST_pca,'s',...
+         x_ORL_pca,y_ORL_pca,'d');
+lgd = legend('MNIST','ORL','Location','NW');
+lgd.FontSize = FontSize;
+l = {'NC','NSC2','NSC3','NSC5','NN','P-BP','P-MSE'};
+labelpoints(x_MNIST_pca,y_MNIST_pca,l,'N','FontSize',FontSize);
+labelpoints(x_ORL_pca,y_ORL_pca,l,'N','FontSize',FontSize);
+set(h(1),'MarkerSize',12,'Linewidth',3);
+set(h(2),'MarkerSize',12,'Linewidth',3);
+set(gca,'FontSize',FontSize);
+ylabel('Execution Time [ms]','FontSize',FontSize)
+xlabel('Success Rate [%]','Fontsize',FontSize)
+grid on
+
 %% Save Figures
 print(fig_MNIST, 'plots/mnist_success','-depsc');
 print(fig_MNIST_time, 'plots/mnist_time','-depsc');
@@ -240,3 +259,4 @@ print(fig_ORL_time, 'plots/orl_time','-depsc');
 print(fig_pca_MNIST, 'plots/mnist_pca','-depsc');
 print(fig_pca_ORL, 'plots/orl_pca','-depsc');
 %print(fig_performance, 'plots/comparison_performance','-depsc');
+print(fig_performance_pca, 'plots/comparison_performance_pca','-depsc');
