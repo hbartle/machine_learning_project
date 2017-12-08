@@ -259,4 +259,4 @@ print(fig_ORL_time, 'plots/orl_time','-depsc');
 print(fig_pca_MNIST, 'plots/mnist_pca','-depsc');
 print(fig_pca_ORL, 'plots/orl_pca','-depsc');
 %print(fig_performance, 'plots/comparison_performance','-depsc');
-print(fig_performance_pca, 'plots/comparison_performance_pca','-depsc');
+%print(fig_performance_pca, 'plots/comparison_performance_pca','-depsc');
