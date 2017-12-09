@@ -46,25 +46,25 @@ test_number = number_of_images - train_number;
 % Random Permutation
 perm = randperm(number_of_images);
 
-% % Shuffle Images
-% train_images_ORL = images_ORL(:,perm(1:train_number));
-% test_images_ORL = images_ORL(:,perm(train_number+1:end));
-% % Shuffle the corresponding labels
-% train_labels_ORL = labels_ORL(perm(1:train_number));
-% test_labels_ORL = labels_ORL(perm(train_number+1:end));
-
-train_images_ORL = [];
-test_images_ORL =[];
-train_labels_ORL = [];
-test_labels_ORL = [];
+% Shuffle Images
+number_of_ORL_iterations = 10;
+for k = 1:number_of_ORL_iterations
+    
+train_images_ORL{k} = [];
+test_images_ORL{k} =[];
+train_labels_ORL{k} = [];
+test_labels_ORL{k} = [];
 for i=1:40
-    train_images_ORL = [train_images_ORL images_ORL(:,find(labels_ORL==i,7))];
-    test_images_ORL = [test_images_ORL images_ORL(:,find(labels_ORL==i,3,'last'))];
-    train_labels_ORL = [train_labels_ORL labels_ORL(find(labels_ORL==i,7))'];
-    test_labels_ORL = [test_labels_ORL labels_ORL(find(labels_ORL==i,3,'last'))'];
+    idx = find(labels_ORL ==i);
+    perm = idx(randperm(length(idx)));
+    train_images_ORL{k} = [train_images_ORL{k} images_ORL(:,perm(1:7))];
+    test_images_ORL{k} = [test_images_ORL{k} images_ORL(:,perm(8:10))];
+    train_labels_ORL{k} = [train_labels_ORL{k} labels_ORL(perm(1:7))'];
+    test_labels_ORL{k} = [test_labels_ORL{k} labels_ORL(perm(8:10))'];
 end
-train_labels_ORL = train_labels_ORL';
-test_labels_ORL = test_labels_ORL';
+train_labels_ORL{k} = train_labels_ORL{k}';
+test_labels_ORL{k} = test_labels_ORL{k}';
+end
 disp('Done!')
 
 %% Dimensionality Reduction using PCA
@@ -79,8 +79,8 @@ apply_NCC
 subclasses = [2,3,5];
 apply_NSC
 %% Nearest Neighborhood Classifier
-training_subset = 1000;
-testing_subset = 500;
+training_subset = 60000;
+testing_subset = 10000;
 apply_NN
 %% Perceptron with Backpropagation on original Data
 apply_Perceptron_BP
@@ -252,11 +252,11 @@ xlabel('Success Rate [%]','Fontsize',FontSize)
 grid on
 
 %% Save Figures
-print(fig_MNIST, 'plots/mnist_success','-depsc');
-print(fig_MNIST_time, 'plots/mnist_time','-depsc');
-print(fig_ORL, 'plots/orl_success','-depsc');
-print(fig_ORL_time, 'plots/orl_time','-depsc');
-print(fig_pca_MNIST, 'plots/mnist_pca','-depsc');
-print(fig_pca_ORL, 'plots/orl_pca','-depsc');
+% print(fig_MNIST, 'plots/mnist_success','-depsc');
+% print(fig_MNIST_time, 'plots/mnist_time','-depsc');
+% print(fig_ORL, 'plots/orl_success','-depsc');
+% print(fig_ORL_time, 'plots/orl_time','-depsc');
+% print(fig_pca_MNIST, 'plots/mnist_pca','-depsc');
+% print(fig_pca_ORL, 'plots/orl_pca','-depsc');
 %print(fig_performance, 'plots/comparison_performance','-depsc');
 %print(fig_performance_pca, 'plots/comparison_performance_pca','-depsc');

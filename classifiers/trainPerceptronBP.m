@@ -54,7 +54,7 @@ while ~isempty(X) & counter < 200
 
     counter = counter + 1;
 end
-length(X)
-counter
+%length(X);
+%counter;
 end
 
